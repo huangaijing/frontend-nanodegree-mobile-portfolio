@@ -422,8 +422,8 @@ var resizePizzas = function (size) {
   changeSliderLabel(size);
 
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx(elem, size) {
-    var oldWidth = elem.offsetWidth;
+  function determineDx(elemoffsetWidth, size) {
+    var oldWidth = elemoffsetWidth;
     var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
@@ -449,13 +449,21 @@ var resizePizzas = function (size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    var allPizzaContainers = document.querySelectorAll(".randomPizzaContainer");//reduce query spent
+    //all the pizza containers have the same dx and newwidth, so we only need to calculate once
+    //fix forced synchouous layout by seperate getting layout value at first and then change the layout value altogether
+    var dx, newwidth, containerOffsetWidth = 0;
+    if (allPizzaContainers.length > 0) {
+      containerOffsetWidth = allPizzaContainers[0].offsetWidth;
+      dx = determineDx(containerOffsetWidth, size);
+      newwidth = (containerOffsetWidth + dx) + 'px'
+
+      // iterate and set new width 
+      for (var i = 0; i < allPizzaContainers.length; i++) {
+        allPizzaContainers[i].style.width = newwidth;
+      }
     }
   }
-
   changePizzaSizes(size);
 
   // User Timing API is awesome
@@ -464,7 +472,6 @@ var resizePizzas = function (size) {
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + timeToResize[timeToResize.length - 1].duration + "ms");
 };
-
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads

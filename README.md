@@ -53,3 +53,15 @@ The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstra
 
 * <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
 * <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+
+## Optimizations done for index.html to achieve a PageSpeed score of at least 90
+* compress html, css and js files
+* inline all css styles
+* resize and compress all images
+* make print-min.css downloaded only when media type is print(non render blocking)
+* set script "analytics.js" and "perfmatters-min.js" as async to make them non parser blocking
+
+## Optimizations done for views/js/main.js to achieve 60fps frame-rate
+* make layers to avoid large painting efforts by adding "will-change: transform;" to ".mover" in views/css/style.css 
+* fix forced synchrouous layout in updatePositions() (scroll page)
+* fix forced synchouous layout in changePizzaSizes(size) (resize pizza)
