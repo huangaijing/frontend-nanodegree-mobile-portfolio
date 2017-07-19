@@ -57,9 +57,11 @@ The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstra
 ## Optimizations done for index.html to achieve a PageSpeed score of at least 90
 * compress html, css and js files
 * inline all css styles
+* inventory my own assets and third-party assets on my pages(all images,css styles,js files).
 * resize and compress all images
 * make print-min.css downloaded only when media type is print(non render blocking)
 * set script "analytics.js" and "perfmatters-min.js" as async to make them non parser blocking
+* add CACHE-CONTROL meta tag in index.html to enable caching the index.html
 
 ## Optimizations done for views/js/main.js to achieve 60fps frame-rate
 * make layers to avoid large painting efforts by adding "will-change: transform;" to ".mover" in views/css/style.css 
