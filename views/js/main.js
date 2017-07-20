@@ -511,15 +511,15 @@ function updatePositions() {
   var items = document.querySelectorAll('.mover');
   var scrollLength = document.body.scrollTop;
   var phase = [];
-
-  for (var i = 0; i < 5; i++) {
+  var i;
+  for (i = 0; i < 5; i++) {
     phase.push(Math.sin(scrollLength / 1250 + i) * 100);
   }
 
-  for (var i = 0, max = items.length; i < max; i++) {
+  for (i = 0, max = items.length; i < max; i++) {
     items[i].style.left = items[i].basicLeft + phase[i % 5] + 'px';
   }
-  
+
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
@@ -541,10 +541,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var pizzaNum = Math.floor(windowViewportHeight / s) * 8;
 
   var basicLeft = [];
-  for (var i = 0 ; i < cols; i++){
+  var i;
+  for (i = 0; i < cols; i++) {
     basicLeft.push((i % cols) * s);
   }
-  for (var i = 0; i < pizzaNum; i++) {
+  for (i = 0; i < pizzaNum; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
